@@ -1,12 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "love.marblegate.creeperfirework.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-  ],
-  "client": [
-    "ExampleMixin"
+    "ExplosionMethodInvoker",
+    "MixinCreeperEntity"
   ],
   "injectors": {
     "defaultRequire": 1
