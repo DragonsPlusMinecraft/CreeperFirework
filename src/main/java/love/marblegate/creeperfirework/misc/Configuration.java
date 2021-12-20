@@ -15,7 +15,7 @@ public class Configuration implements ConfigData {
     @Comment("The probability of creeper turning into firework. It must be bigger than 0.0 and not exceed 1.0.")
     public double TURNING_PROBABILITY = 1.0;
 
-    public static Configuration getRealTimeConfig(){
+    public static Configuration getRealTimeConfig() {
         return AutoConfig.getConfigHolder(Configuration.class).getConfig();
     }
 }

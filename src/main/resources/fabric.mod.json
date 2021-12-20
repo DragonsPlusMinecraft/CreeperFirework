@@ -12,7 +12,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/creeper-firework",
     "sources": "https://github.com/MarbleGateKeeper/CreeperFirework"
   },
-
+  "icon": "assets/creeper_firework/icon.png",
   "license": "WTFPL",
   "environment": "*",
   "entrypoints": {
@@ -21,6 +21,9 @@
     ],
     "client": [
       "love.marblegate.creeperfirework.ClientCreeperFirework"
+    ],
+    "modmenu": [
+      "love.marblegate.creeperfirework.misc.ModMenuIntegration"
     ]
   },
   "mixins": [

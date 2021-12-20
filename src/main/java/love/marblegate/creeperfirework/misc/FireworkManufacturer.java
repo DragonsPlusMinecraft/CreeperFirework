@@ -16,7 +16,7 @@ public class FireworkManufacturer {
         // Maximum is 8 dyes for a firework star
         List<Integer> list = Lists.newArrayList();
         Random rand = new Random();
-        int dyeCount = rand.nextInt(8)+1;
+        int dyeCount = rand.nextInt(8) + 1;
         for (int i = 0; i < dyeCount; i++)
             list.add(DyeColor.values()[rand.nextInt(DyeColor.values().length)].getFireworkColor());
 
@@ -37,14 +37,14 @@ public class FireworkManufacturer {
         return ret;
     }
 
-    public static NbtCompound generateRandomSpecial(){
+    public static NbtCompound generateRandomSpecial() {
         NbtCompound fireworkInfoNbt = new NbtCompound();
 
         // Generate Color From DyeColor
         // Maximum is 8 dyes for a firework star
         List<Integer> list = Lists.newArrayList();
         Random rand = new Random();
-        int dyeCount = rand.nextInt(8)+1;
+        int dyeCount = rand.nextInt(8) + 1;
         for (int i = 0; i < dyeCount; i++)
             list.add(DyeColor.values()[rand.nextInt(DyeColor.values().length)].getFireworkColor());
 
@@ -54,7 +54,7 @@ public class FireworkManufacturer {
             colours[i] = list.get(i);
 
         fireworkInfoNbt.putIntArray("Colors", colours);
-        fireworkInfoNbt.putByte("Type", (byte) (rand.nextInt(3)+2));
+        fireworkInfoNbt.putByte("Type", (byte) (rand.nextInt(3) + 2));
         NbtList mimicFireworkItemNbtStructureContainer = new NbtList();
         mimicFireworkItemNbtStructureContainer.add(fireworkInfoNbt);
 

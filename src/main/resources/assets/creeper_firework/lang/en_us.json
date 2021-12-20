@@ -1,0 +1,6 @@
+{
+  "text.autoconfig.creeper_firework.title": "Creeper Firework Setting",
+  "text.autoconfig.creeper_firework.option.DESTROY_BLOCK": "Destroy environment",
+  "text.autoconfig.creeper_firework.option.HURT_CREATURE": "Hurt mobs",
+  "text.autoconfig.creeper_firework.option.TURNING_PROBABILITY": "Probability of turning into firework"
+}

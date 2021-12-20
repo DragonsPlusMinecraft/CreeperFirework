@@ -1,0 +1,6 @@
+{
+  "text.autoconfig.creeper_firework.title": "烟花苦力怕设置",
+  "text.autoconfig.creeper_firework.option.DESTROY_BLOCK": "破坏地形",
+  "text.autoconfig.creeper_firework.option.HURT_CREATURE": "伤害生物",
+  "text.autoconfig.creeper_firework.option.TURNING_PROBABILITY": "炸成烟花的概率"
+}

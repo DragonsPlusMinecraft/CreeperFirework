@@ -4,10 +4,7 @@ import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import love.marblegate.creeperfirework.misc.Configuration;
-import love.marblegate.creeperfirework.misc.FireworkManufacturer;
 import love.marblegate.creeperfirework.misc.NetworkUtil;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,14 +14,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -38,31 +32,36 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
 @Mixin(CreeperEntity.class)
 public abstract class MixinCreeperEntity {
 
-    @Shadow private int explosionRadius;
+    @Shadow
+    private int explosionRadius;
 
     @Final
-    @Shadow private static TrackedData<Boolean> CHARGED;
+    @Shadow
+    private static TrackedData<Boolean> CHARGED;
 
     @Inject(method = "explode", at = @At("HEAD"), cancellable = true)
     private void injected(CallbackInfo ci) {
-        if(new Random(((CreeperEntity) (Object) this).getUuid().getLeastSignificantBits()).nextDouble() < Configuration.getRealTimeConfig().TURNING_PROBABILITY){
-            if(!((CreeperEntity) (Object) this).getWorld().isClient()){
+        if (new Random(((CreeperEntity) (Object) this).getUuid().getLeastSignificantBits()).nextDouble() < Configuration.getRealTimeConfig().TURNING_PROBABILITY) {
+            if (!((CreeperEntity) (Object) this).getWorld().isClient()) {
 
-                NetworkUtil.notifyClient((ServerWorld) ((CreeperEntity) (Object) this).getWorld(),((CreeperEntity) (Object) this).getBlockPos(),((CreeperEntity) (Object) this).getDataTracker().get(CHARGED));
-                if(Configuration.getRealTimeConfig().HURT_CREATURE){
+                NetworkUtil.notifyClient((ServerWorld) ((CreeperEntity) (Object) this).getWorld(), ((CreeperEntity) (Object) this).getBlockPos(), ((CreeperEntity) (Object) this).getDataTracker().get(CHARGED));
+                if (Configuration.getRealTimeConfig().HURT_CREATURE) {
                     // Following code is following Explosion
                     Vec3d groundZero = ((CreeperEntity) (Object) this).getPos();
                     Box box = new Box(((CreeperEntity) (Object) this).getBlockPos()).expand(getExplosionPower());
                     List<LivingEntity> victims = ((CreeperEntity) (Object) this).getWorld().getNonSpectatingEntities(LivingEntity.class, box);
-                    for(LivingEntity victim: victims){
+                    for (LivingEntity victim : victims) {
                         if (!victim.isImmuneToExplosion()) {
                             float j = getExplosionPower() * 2.0F;
-                            double h = Math.sqrt(victim.squaredDistanceTo(groundZero)) / (double)j;
+                            double h = Math.sqrt(victim.squaredDistanceTo(groundZero)) / (double) j;
                             if (h <= 1.0D) {
                                 double s = victim.getX() - groundZero.x;
                                 double t = victim.getEyeY() - groundZero.y;
@@ -74,8 +73,9 @@ public abstract class MixinCreeperEntity {
                                     u /= blockPos;
                                     double fluidState = Explosion.getExposure(groundZero, victim);
                                     double v = (1.0D - h) * fluidState;
-                                    victim.damage(DamageSource.explosion((CreeperEntity) (Object) this), (float)((int)((v * v + v) / 2.0D * 7.0D * (double)j + 1.0D)));
-                                    double w = ProtectionEnchantment.transformExplosionKnockback((LivingEntity)victim, v);;
+                                    victim.damage(DamageSource.explosion((CreeperEntity) (Object) this), (float) ((int) ((v * v + v) / 2.0D * 7.0D * (double) j + 1.0D)));
+                                    double w = ProtectionEnchantment.transformExplosionKnockback((LivingEntity) victim, v);
+                                    ;
                                     victim.setVelocity(victim.getVelocity().add(s * w, t * w, u * w));
                                 }
                             }
@@ -83,18 +83,18 @@ public abstract class MixinCreeperEntity {
                     }
                 }
 
-                if(Configuration.getRealTimeConfig().DESTROY_BLOCK && ((CreeperEntity) (Object) this).getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)){
+                if (Configuration.getRealTimeConfig().DESTROY_BLOCK && ((CreeperEntity) (Object) this).getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                     // Following code is following Explosion
                     ((CreeperEntity) (Object) this).getWorld().emitGameEvent(((CreeperEntity) (Object) this), GameEvent.EXPLODE, ((CreeperEntity) (Object) this).getBlockPos());
                     Set<BlockPos> explosionRange = Sets.newHashSet();
                     BlockPos groundZero = ((CreeperEntity) (Object) this).getBlockPos();
-                    for(int j = 0; j < 16; ++j) {
+                    for (int j = 0; j < 16; ++j) {
                         for (int k = 0; k < 16; ++k) {
                             for (int l = 0; l < 16; ++l) {
                                 if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
-                                    double d = (float)j / 15.0F * 2.0F - 1.0F;
-                                    double e = (float)k / 15.0F * 2.0F - 1.0F;
-                                    double f = (float)l / 15.0F * 2.0F - 1.0F;
+                                    double d = (float) j / 15.0F * 2.0F - 1.0F;
+                                    double e = (float) k / 15.0F * 2.0F - 1.0F;
+                                    double f = (float) l / 15.0F * 2.0F - 1.0F;
                                     double g = Math.sqrt(d * d + e * e + f * f);
                                     d /= g;
                                     e /= g;
@@ -105,7 +105,7 @@ public abstract class MixinCreeperEntity {
                                     double o = groundZero.getZ();
                                     System.out.println("Creeper is at " + groundZero);
                                     for (; h > 0.0F; h -= 0.22500001F) {
-                                        BlockPos blockPos = new BlockPos(m,n,o);
+                                        BlockPos blockPos = new BlockPos(m, n, o);
                                         BlockState blockState = ((CreeperEntity) (Object) this).getWorld().getBlockState(blockPos);
                                         FluidState fluidState = ((CreeperEntity) (Object) this).getWorld().getFluidState(blockPos);
                                         if (!((CreeperEntity) (Object) this).getWorld().isInBuildLimit(blockPos)) {
@@ -173,8 +173,8 @@ public abstract class MixinCreeperEntity {
 
     }
 
-    private float getExplosionPower(){
-        return ((CreeperEntity) (Object) this).getDataTracker().get(CHARGED)? explosionRadius * 2 : explosionRadius;
+    private float getExplosionPower() {
+        return ((CreeperEntity) (Object) this).getDataTracker().get(CHARGED) ? explosionRadius * 2 : explosionRadius;
     }
 
 }
