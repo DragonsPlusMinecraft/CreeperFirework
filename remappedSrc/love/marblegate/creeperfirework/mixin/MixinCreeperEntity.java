@@ -50,14 +50,14 @@ public abstract class MixinCreeperEntity {
     @Inject(method = "explode", at = @At("HEAD"), cancellable = true)
     private void injected(CallbackInfo ci) {
         if (new Random(((CreeperEntity) (Object) this).getUuid().getLeastSignificantBits()).nextDouble() < Configuration.getRealTimeConfig().TURNING_PROBABILITY) {
-            if (!((CreeperEntity) (Object) this).world.isClient()) {
+            if (!((CreeperEntity) (Object) this).getWorld().isClient()) {
 
-                NetworkUtil.notifyClient((ServerWorld) ((CreeperEntity) (Object) this).world, ((CreeperEntity) (Object) this).getBlockPos(), ((CreeperEntity) (Object) this).getDataTracker().get(CHARGED));
+                NetworkUtil.notifyClient((ServerWorld) ((CreeperEntity) (Object) this).getWorld(), ((CreeperEntity) (Object) this).getBlockPos(), ((CreeperEntity) (Object) this).getDataTracker().get(CHARGED));
                 if (Configuration.getRealTimeConfig().HURT_CREATURE) {
                     // Following code is following Explosion
                     Vec3d groundZero = ((CreeperEntity) (Object) this).getPos();
                     Box box = new Box(((CreeperEntity) (Object) this).getBlockPos()).expand(getExplosionPower());
-                    List<LivingEntity> victims = ((CreeperEntity) (Object) this).world.getNonSpectatingEntities(LivingEntity.class, box);
+                    List<LivingEntity> victims = ((CreeperEntity) (Object) this).getWorld().getNonSpectatingEntities(LivingEntity.class, box);
                     for (LivingEntity victim : victims) {
                         if (!victim.isImmuneToExplosion()) {
                             float j = getExplosionPower() * 2.0F;
@@ -83,9 +83,9 @@ public abstract class MixinCreeperEntity {
                     }
                 }
 
-                if (Configuration.getRealTimeConfig().DESTROY_BLOCK && ((CreeperEntity) (Object) this).world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                if (Configuration.getRealTimeConfig().DESTROY_BLOCK && ((CreeperEntity) (Object) this).getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                     // Following code is following Explosion
-                    ((CreeperEntity) (Object) this).world.emitGameEvent(((CreeperEntity) (Object) this), GameEvent.EXPLODE, ((CreeperEntity) (Object) this).getBlockPos());
+                    ((CreeperEntity) (Object) this).getWorld().emitGameEvent(((CreeperEntity) (Object) this), GameEvent.EXPLODE, ((CreeperEntity) (Object) this).getBlockPos());
                     Set<BlockPos> explosionRange = Sets.newHashSet();
                     BlockPos groundZero = ((CreeperEntity) (Object) this).getBlockPos();
                     for (int j = 0; j < 16; ++j) {
@@ -99,16 +99,16 @@ public abstract class MixinCreeperEntity {
                                     d /= g;
                                     e /= g;
                                     f /= g;
-                                    float h = getExplosionPower() * (0.7F + ((CreeperEntity) (Object) this).world.random.nextFloat() * 0.6F);
+                                    float h = getExplosionPower() * (0.7F + ((CreeperEntity) (Object) this).getWorld().random.nextFloat() * 0.6F);
                                     double m = groundZero.getX();
                                     double n = groundZero.getY();
                                     double o = groundZero.getZ();
                                     System.out.println("Creeper is at " + groundZero);
                                     for (; h > 0.0F; h -= 0.22500001F) {
                                         BlockPos blockPos = new BlockPos(m, n, o);
-                                        BlockState blockState = ((CreeperEntity) (Object) this).world.getBlockState(blockPos);
-                                        FluidState fluidState = ((CreeperEntity) (Object) this).world.getFluidState(blockPos);
-                                        if (!((CreeperEntity) (Object) this).world.isInBuildLimit(blockPos)) {
+                                        BlockState blockState = ((CreeperEntity) (Object) this).getWorld().getBlockState(blockPos);
+                                        FluidState fluidState = ((CreeperEntity) (Object) this).getWorld().getFluidState(blockPos);
+                                        if (!((CreeperEntity) (Object) this).getWorld().isInBuildLimit(blockPos)) {
                                             break;
                                         }
 
@@ -136,34 +136,34 @@ public abstract class MixinCreeperEntity {
                     ObjectArrayList<Pair<ItemStack, BlockPos>> blockDropList = new ObjectArrayList<>();
 
                     /// I really do not want to create an explosion instance here. But there is a method below needs it.
-                    Explosion simulateExplosionForParameter = new Explosion(((CreeperEntity) (Object) this).world, null, null, null,
+                    Explosion simulateExplosionForParameter = new Explosion(((CreeperEntity) (Object) this).getWorld(), null, null, null,
                             ((CreeperEntity) (Object) this).getBlockX(), ((CreeperEntity) (Object) this).getBlockY(), ((CreeperEntity) (Object) this).getBlockZ(), getExplosionPower(), false, Explosion.DestructionType.DESTROY);
 
                     for (BlockPos affectedPos : explosionRange) {
-                        BlockState blockStateOfAffected = ((CreeperEntity) (Object) this).world.getBlockState(affectedPos);
+                        BlockState blockStateOfAffected = ((CreeperEntity) (Object) this).getWorld().getBlockState(affectedPos);
                         Block block = blockStateOfAffected.getBlock();
                         if (!blockStateOfAffected.isAir()) {
                             BlockPos blockPos2 = affectedPos.toImmutable();
-                            ((CreeperEntity) (Object) this).world.getProfiler().push("explosion_blocks");
+                            ((CreeperEntity) (Object) this).getWorld().getProfiler().push("explosion_blocks");
 
-                            BlockEntity blockEntity = blockStateOfAffected.hasBlockEntity() ? ((CreeperEntity) (Object) this).world.getBlockEntity(affectedPos) : null;
-                            LootContext.Builder builder = (new LootContext.Builder((ServerWorld) ((CreeperEntity) (Object) this).world)).random(((CreeperEntity) (Object) this).world.random).parameter(LootContextParameters.ORIGIN, Vec3d.ofCenter(affectedPos)).parameter(LootContextParameters.TOOL, ItemStack.EMPTY).optionalParameter(LootContextParameters.BLOCK_ENTITY, blockEntity).optionalParameter(LootContextParameters.THIS_ENTITY, ((CreeperEntity) (Object) this));
+                            BlockEntity blockEntity = blockStateOfAffected.hasBlockEntity() ? ((CreeperEntity) (Object) this).getWorld().getBlockEntity(affectedPos) : null;
+                            LootContext.Builder builder = (new LootContext.Builder((ServerWorld) ((CreeperEntity) (Object) this).getWorld())).random(((CreeperEntity) (Object) this).getWorld().random).parameter(LootContextParameters.ORIGIN, Vec3d.ofCenter(affectedPos)).parameter(LootContextParameters.TOOL, ItemStack.EMPTY).optionalParameter(LootContextParameters.BLOCK_ENTITY, blockEntity).optionalParameter(LootContextParameters.THIS_ENTITY, ((CreeperEntity) (Object) this));
                             builder.parameter(LootContextParameters.EXPLOSION_RADIUS, getExplosionPower());
 
                             blockStateOfAffected.getDroppedStacks(builder).forEach((stack) -> {
                                 ExplosionMethodInvoker.invokeTryMergeStack(blockDropList, stack, blockPos2);
                             });
 
-                            ((CreeperEntity) (Object) this).world.setBlockState(affectedPos, Blocks.AIR.getDefaultState(), 3);
+                            ((CreeperEntity) (Object) this).getWorld().setBlockState(affectedPos, Blocks.AIR.getDefaultState(), 3);
 
                             // yes here is what I'm talking. This part cannot be deleted.
-                            block.onDestroyedByExplosion(((CreeperEntity) (Object) this).world, affectedPos, simulateExplosionForParameter);
-                            ((CreeperEntity) (Object) this).world.getProfiler().pop();
+                            block.onDestroyedByExplosion(((CreeperEntity) (Object) this).getWorld(), affectedPos, simulateExplosionForParameter);
+                            ((CreeperEntity) (Object) this).getWorld().getProfiler().pop();
                         }
                     }
 
                     for (Pair<ItemStack, BlockPos> itemStackBlockPosPair : blockDropList) {
-                        Block.dropStack(((CreeperEntity) (Object) this).world, itemStackBlockPosPair.getSecond(), itemStackBlockPosPair.getFirst());
+                        Block.dropStack(((CreeperEntity) (Object) this).getWorld(), itemStackBlockPosPair.getSecond(), itemStackBlockPosPair.getFirst());
                     }
                 }
             }
