@@ -1,6 +1,12 @@
 {
   "text.autoconfig.creeper_firework.title": "Creeper Firework Setting",
-  "text.autoconfig.creeper_firework.option.DESTROY_BLOCK": "Destroy environment",
-  "text.autoconfig.creeper_firework.option.HURT_CREATURE": "Hurt mobs",
-  "text.autoconfig.creeper_firework.option.TURNING_PROBABILITY": "Probability of turning into firework"
+  "text.autoconfig.creeper_firework.option.ACTIVE_EXPLOSION_TO_FIREWORK": "Turns Into Firework When Actively Explodes ",
+  "text.autoconfig.creeper_firework.option.DESTROY_BLOCK": "Active-explosion Firework Destroy Environment",
+  "text.autoconfig.creeper_firework.option.HURT_CREATURE": "Active-explosion Firework Hurt Mobs",
+  "text.autoconfig.creeper_firework.option.TURNING_PROBABILITY": "Probability of turning into firework when actively explodes",
+  "text.autoconfig.creeper_firework.option.DEATH_TO_FIREWORK": "Turns Into Firework When Die",
+  "text.autoconfig.creeper_firework.option.DEATH_EXPLOSION_DESTROY_BLOCK": "Death Destroy Environment",
+  "text.autoconfig.creeper_firework.option.DEATH_EXPLOSION_HURT_CREATURE": "Death Firework Hurt Mobs",
+  "text.autoconfig.creeper_firework.option.DEATH_EXPLOSION_TURNING_PROBABILITY": "Probability of turning into firework when die"
+
 }
