@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(Explosion.class)
 public interface ExplosionMethodInvoker {
     @Invoker("tryMergeStack")
-    public static void invokeTryMergeStack(ObjectArrayList<Pair<ItemStack, BlockPos>> stacks, ItemStack stack, BlockPos pos) {
+    static void invokeTryMergeStack(ObjectArrayList<Pair<ItemStack, BlockPos>> stacks, ItemStack stack, BlockPos pos) {
         throw new AssertionError();
     }
 }
