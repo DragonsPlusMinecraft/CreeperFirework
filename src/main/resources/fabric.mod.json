@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Creeper Firework",
-  "description": "This simple mod replaces the standard creeper explosion with a well looking and ...probably much nione.",
+  "description": "Creeper explodes into firework!",
   "authors": [
     "MarbleGateKeeper 白门守望者"
   ],
@@ -12,7 +12,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/creeper-firework",
     "sources": "https://github.com/MarbleGateKeeper/CreeperFirework"
   },
-  "icon": "assets/creeper_firework/icon.png",
+  "icon": "assets/creeper_firework/icon.jpg",
   "license": "WTFPL",
   "environment": "*",
   "entrypoints": {
