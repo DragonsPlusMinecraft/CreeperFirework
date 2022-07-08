@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Creeper Firework",
-  "description": "This simple mod replaces the standard creeper explosion with a well looking and ...probably much nione.",
+  "description": "Creeper explodes into firework!",
   "authors": [
     "MarbleGateKeeper 白门守望者"
   ],
