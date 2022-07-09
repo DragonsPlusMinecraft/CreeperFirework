@@ -150,7 +150,6 @@ public abstract class MixinCreeperEntity extends HostileEntity {
                                 h -= (optional.get() + 0.3F) * 0.3F;
                             }
 
-                            System.out.println();
                             if (h > 0.0F) {
                                 explosionRange.add(blockPos);
                             }
@@ -163,8 +162,6 @@ public abstract class MixinCreeperEntity extends HostileEntity {
                 }
             }
         }
-
-        System.out.println(explosionRange);
 
         ObjectArrayList<Pair<ItemStack, BlockPos>> blockDropList = new ObjectArrayList<>();
 
