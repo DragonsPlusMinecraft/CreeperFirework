@@ -1,4 +1,4 @@
-package love.marblegate.creeperfirework.misc;
+package plus.dragons.creeperfirework.misc;
 
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

@@ -1,4 +1,4 @@
-package love.marblegate.creeperfirework.mixin;
+package plus.dragons.creeperfirework.mixin;
 
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

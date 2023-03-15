@@ -1,10 +1,10 @@
-package love.marblegate.creeperfirework.mixin;
+package plus.dragons.creeperfirework.mixin;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import love.marblegate.creeperfirework.misc.Configuration;
-import love.marblegate.creeperfirework.misc.NetworkUtil;
+import plus.dragons.creeperfirework.misc.Configuration;
+import plus.dragons.creeperfirework.misc.NetworkUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -107,7 +107,7 @@ public abstract class MixinCreeperEntity extends HostileEntity {
                         u /= blockPos;
                         double fluidState = Explosion.getExposure(groundZero, victim);
                         double v = (1.0D - h) * fluidState;
-                        victim.damage(DamageSource.explosion((CreeperEntity) (Object) this,null), (float) ((int) ((v * v + v) / 2.0D * 7.0D * (double) j + 1.0D)));
+                        victim.damage(getDamageSources().explosion((CreeperEntity) (Object) this,null), (float) ((int) ((v * v + v) / 2.0D * 7.0D * (double) j + 1.0D)));
                         double w = ProtectionEnchantment.transformExplosionKnockback((LivingEntity) victim, v);
 
                         victim.setVelocity(victim.getVelocity().add(s * w, t * w, u * w));
@@ -138,7 +138,7 @@ public abstract class MixinCreeperEntity extends HostileEntity {
                         double n = groundZero.getY();
                         double o = groundZero.getZ();
                         for (; h > 0.0F; h -= 0.22500001F) {
-                            BlockPos blockPos = new BlockPos(m, n, o);
+                            BlockPos blockPos = new BlockPos((int) m, (int) n, (int) o);
                             BlockState blockState = ((CreeperEntity) (Object) this).getWorld().getBlockState(blockPos);
                             FluidState fluidState = ((CreeperEntity) (Object) this).getWorld().getFluidState(blockPos);
                             if (!((CreeperEntity) (Object) this).getWorld().isInBuildLimit(blockPos)) {

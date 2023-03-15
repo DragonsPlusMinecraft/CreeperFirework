@@ -1,7 +1,7 @@
-package love.marblegate.creeperfirework;
+package plus.dragons.creeperfirework;
 
-import love.marblegate.creeperfirework.misc.FireworkManufacturer;
-import love.marblegate.creeperfirework.misc.NetworkUtil;
+import plus.dragons.creeperfirework.misc.FireworkManufacturer;
+import plus.dragons.creeperfirework.misc.NetworkUtil;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;

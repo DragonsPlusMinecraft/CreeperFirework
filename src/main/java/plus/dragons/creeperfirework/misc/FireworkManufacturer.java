@@ -1,4 +1,4 @@
-package love.marblegate.creeperfirework.misc;
+package plus.dragons.creeperfirework.misc;
 
 import com.google.common.collect.Lists;
 import net.minecraft.nbt.NbtCompound;

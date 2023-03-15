@@ -1,4 +1,4 @@
-package love.marblegate.creeperfirework.misc;
+package plus.dragons.creeperfirework.misc;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;

@@ -10,20 +10,20 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/creeper-firework",
-    "sources": "https://github.com/MarbleGateKeeper/CreeperFirework"
+    "sources": "https://github.com/DragonsPlusMinecraft/CreeperFirework"
   },
   "icon": "assets/creeper_firework/icon.jpg",
   "license": "WTFPL",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "love.marblegate.creeperfirework.CreeperFirework"
+      "plus.dragons.creeperfirework.CreeperFirework"
     ],
     "client": [
-      "love.marblegate.creeperfirework.ClientCreeperFirework"
+      "plus.dragons.creeperfirework.ClientCreeperFirework"
     ],
     "modmenu": [
-      "love.marblegate.creeperfirework.misc.ModMenuIntegration"
+      "plus.dragons.creeperfirework.misc.ModMenuIntegration"
     ]
   },
   "mixins": [

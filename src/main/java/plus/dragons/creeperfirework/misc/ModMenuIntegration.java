@@ -1,4 +1,4 @@
-package love.marblegate.creeperfirework.misc;
+package plus.dragons.creeperfirework.misc;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
