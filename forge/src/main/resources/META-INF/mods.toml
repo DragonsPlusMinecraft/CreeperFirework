@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[46,)"
+license = "MIT"
+[[mods]]
+modId = "creeper_firework"
+version = "${version}"
+displayName="Creeper Firework" #mandatory
+displayURL="https://github.com/DragonsPlusMinecraft/CreeperFirework" #optional
+logoFile="icon.jpg" #optional
+authors="MarbleGateKeeper" #optional
+description='''
+Creeper explodes into firework!
+'''
+[[dependencies.creeper_firework]] #optional
+modId="forge" #mandatory
+mandatory=true #mandatory
+versionRange="[46,)" #mandatory
+ordering="NONE"
+side="BOTH"
+[[dependencies.creeper_firework]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20,1.20.1)"
+ordering="NONE"
+side="BOTH"

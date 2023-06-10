@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "creeper_firwork",
+  "version": "${version}",
+  "name": "Creeper Firework",
+  "description": "Creeper explodes into firework!",
+  "authors": [
+    "MarbleGateKeeper"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/creeper-firework",
+    "sources": "https://github.com/DragonsPlusMinecraft/CreeperFirework"
+  },
+  "icon": "icon.jpg",
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "plus.dragons.creeperfirework.fabric.CreeperFireworkFabric"
+    ],
+    "client": [
+      "plus.dragons.creeperfirework.fabric.ClientCreeperFireworkFabric"
+    ],
+    "modmenu": [
+      "plus.dragons.creeperfirework.fabric.misc.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "creeper_firwork-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.20",
+    "cloth-config": "*"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "text.autoconfig.creeper_firework.title": "Creeper Firework Setting",
+  "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK": "CREEPER EXPLODES INTO FIREWORK",
+  "text.autoconfig.creeper_firework.option.CREEPER_FIREWORK_HURT_CREATURE": "CREEPER FIREWORK HURTS CREATURE",
+  "text.autoconfig.creeper_firework.option.CREEPER_FIREWORK_DESTROY_BLOCK": "CREEPER FIREWORK DESTROYS BLOCK",
+  "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK_PROBABILITY": "CREEPER EXPLODSE INTO FIREWORK PROBABILITY",
+  "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK_WHEN_DIE": "CREEPER EXPLODES INTO FIREWORK WHEN IT DIES",
+  "text.autoconfig.creeper_firework.option.CREEPER_DEATH_FIREWORK_DESTROY_BLOCK": "CREEPER DEATH FIREWORK DESTROYS BLOCK",
+  "text.autoconfig.creeper_firework.option.CREEPER_DEATH_FIREWORK_HURT_CREATURE": "CREEPER DEATH_FIREWORK HURTS CREATURE",
+  "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK_PROBABILITY_WHEN_DIE": "CREEPER EXPLODES INTO FIREWORK PROBABILITY WHEN IT DIES"
+
+}

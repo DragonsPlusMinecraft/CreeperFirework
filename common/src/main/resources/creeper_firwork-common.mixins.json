@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "plus.dragons.creeperfirework.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "mixins": [
+    "CreeperEntityAccessor",
+    "CreeperEntityMixin",
+    "ExplosionMethodInvoker"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
