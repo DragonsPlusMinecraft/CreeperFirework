@@ -45,7 +45,7 @@ jobs:
           version: ${{ env.VERSION }}
           version-type: release
           changelog-file: changelog/${{ env.VERSION }}.md
-          files: forge/build/libs/*-${{ env.VERSION }}!(-@(dev|sources|slim|dev-shadow)).jar
+          files: neoforge/build/libs/*-${{ env.VERSION }}!(-@(dev|sources|slim|dev-shadow)).jar
 
           loaders: |
             neoforge
