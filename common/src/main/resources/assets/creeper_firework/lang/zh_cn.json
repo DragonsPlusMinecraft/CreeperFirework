@@ -6,6 +6,6 @@
   "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK_PROBABILITY": "主动爆炸时炸成烟花的概率",
   "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK_WHEN_DIE": "死亡时炸成烟花",
   "text.autoconfig.creeper_firework.option.CREEPER_DEATH_FIREWORK_DESTROY_BLOCK": "死亡爆炸产生的烟花破坏地形",
-  "text.autoconfig.creeper_firework.option.CREEPER_DEATH_FIREWORK_HURT_CREATURE": "死亡爆炸产生的烟花破坏地形",
+  "text.autoconfig.creeper_firework.option.CREEPER_DEATH_FIREWORK_HURT_CREATURE": "死亡爆炸产生的烟花伤害生物",
   "text.autoconfig.creeper_firework.option.CREEPER_EXPLODE_INTO_FIREWORK_PROBABILITY_WHEN_DIE": "死亡爆炸时炸成烟花的概率"
 }
