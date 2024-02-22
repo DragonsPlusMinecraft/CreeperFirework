@@ -14,7 +14,7 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
-        mixinConfig "creeper_firwork-common.mixins.json"
+        mixinConfig "creeper_firework-common.mixins.json"
     }
 }
 

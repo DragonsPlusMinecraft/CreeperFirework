@@ -3,7 +3,7 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/creeper_firwork.accesswidener")
+    accessWidenerPath = file("src/main/resources/creeper_firework.accesswidener")
 }
 
 dependencies {

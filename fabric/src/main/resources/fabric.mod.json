@@ -26,7 +26,7 @@
     ]
   },
   "mixins": [
-    "creeper_firwork-common.mixins.json"
+    "creeper_firework-common.mixins.json"
   ],
   "depends": {
     "fabric": "*",
