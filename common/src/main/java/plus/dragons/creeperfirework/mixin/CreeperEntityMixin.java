@@ -2,7 +2,6 @@ package plus.dragons.creeperfirework.mixin;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -29,13 +28,13 @@ import net.minecraft.world.explosion.Explosion;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import plus.dragons.creeperfirework.Configuration;
 import plus.dragons.creeperfirework.FireworkEffect;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -93,8 +92,12 @@ public abstract class CreeperEntityMixin extends HostileEntity {
         Box box = new Box(this.getBlockPos()).expand(getExplosionPower());
         List<LivingEntity> victims = this.getWorld().getNonSpectatingEntities(LivingEntity.class, box);
         victims.remove(this);
+        if(victims.isEmpty()) return;
+        /// I really do not want to create an explosion instance here. But there is a method below needs it.
+        Explosion simulateExplosionForParameter = new Explosion(this.getWorld(), null,
+                this.getBlockX(), this.getBlockY(), this.getBlockZ(), getExplosionPower(), false, Explosion.DestructionType.DESTROY);
         for (LivingEntity victim : victims) {
-            if (!victim.isImmuneToExplosion()) {
+            if (!victim.isImmuneToExplosion(simulateExplosionForParameter)) {
                 float j = getExplosionPower() * 2.0F;
                 double h = Math.sqrt(victim.squaredDistanceTo(groundZero)) / (double) j;
                 if (h <= 1.0D) {
@@ -164,10 +167,10 @@ public abstract class CreeperEntityMixin extends HostileEntity {
             }
         }
 
-        ObjectArrayList<Pair<ItemStack, BlockPos>> blockDropList = new ObjectArrayList<>();
+        List<Pair<ItemStack, BlockPos>> blockDropList = new ArrayList<>();
 
         /// I really do not want to create an explosion instance here. But there is a method below needs it.
-        Explosion simulateExplosionForParameter = new Explosion(this.getWorld(), null, null, null,
+        Explosion simulateExplosionForParameter = new Explosion(this.getWorld(), null,
                 this.getBlockX(), this.getBlockY(), this.getBlockZ(), getExplosionPower(), false, Explosion.DestructionType.DESTROY);
 
         for (BlockPos affectedPos : explosionRange) {
