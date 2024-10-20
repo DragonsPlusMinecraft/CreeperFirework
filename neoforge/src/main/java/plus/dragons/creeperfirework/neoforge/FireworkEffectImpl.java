@@ -6,7 +6,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.neoforged.neoforge.network.PacketDistributor;
-import plus.dragons.creeperfirework.neoforge.network.Payload;
+import plus.dragons.creeperfirework.network.Payload;
 import plus.dragons.creeperfirework.mixin.CreeperEntityAccessor;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class FireworkEffectImpl {
     private static void sendEffectPacket(World level, BlockPos pos, boolean powered) {
         List<PlayerEntity> players = level.getPlayers().stream().filter(serverPlayerEntity -> serverPlayerEntity.getBlockPos().isWithinDistance(pos, 192)).collect(Collectors.toList());
         for (var player : players) {
-            PacketDistributor.PLAYER.with((ServerPlayerEntity) player).send(new Payload(pos, powered));
+            PacketDistributor.sendToPlayer((ServerPlayerEntity) player,new Payload(pos, powered));
         }
     }
 }

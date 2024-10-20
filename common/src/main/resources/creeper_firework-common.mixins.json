@@ -7,8 +7,7 @@
   ],
   "mixins": [
     "CreeperEntityAccessor",
-    "CreeperEntityMixin",
-    "ExplosionMethodInvoker"
+    "CreeperEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

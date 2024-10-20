@@ -5,7 +5,7 @@
   "name": "Creeper Firework",
   "description": "Creeper explodes into firework!",
   "authors": [
-    "MarbleGateKeeper"
+    "MarbleGate"
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/creeper-firework",
@@ -30,7 +30,7 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.20.1",
+    "minecraft": ">=1.21.1",
     "cloth-config": "*"
   }
 }

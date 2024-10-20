@@ -1,57 +1,45 @@
 package plus.dragons.creeperfirework.misc;
 
-import com.google.common.collect.Lists;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtList;
+import it.unimi.dsi.fastutil.Pair;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.component.type.FireworkExplosionComponent;
 import net.minecraft.util.DyeColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class FireworkManufacturer {
-    public static NbtCompound generate(boolean powered) {
-        NbtCompound fireworkInfoNbt = getFireworkInfoNbt();
-        fireworkInfoNbt.putBoolean("Flicker", powered);
-        fireworkInfoNbt.putByte("Type", (byte) (powered ? 1 : 0));
-        fireworkInfoNbt.putBoolean("Trail", powered);
-        NbtList mimicFireworkItemNbtStructureContainer = new NbtList();
-        mimicFireworkItemNbtStructureContainer.add(fireworkInfoNbt);
-
-        NbtCompound ret = new NbtCompound();
-        ret.put("Explosions", mimicFireworkItemNbtStructureContainer);
+    public static final Random RNG = new Random();
+    public static List<FireworkExplosionComponent> generate(boolean powered) {
+        var colors = genFireworkExplosionColorPart();
+        List<FireworkExplosionComponent> ret = new ArrayList<>();
+        ret.add(new FireworkExplosionComponent(powered ? FireworkExplosionComponent.Type.SMALL_BALL : randomSpecialType(),
+                colors.left(),colors.right(),powered,powered));
         return ret;
     }
 
-    public static NbtCompound generateRandomSpecial() {
-        NbtCompound fireworkInfoNbt = getFireworkInfoNbt();
-        fireworkInfoNbt.putByte("Type", (byte) (new Random().nextInt(3) + 2));
-        NbtList mimicFireworkItemNbtStructureContainer = new NbtList();
-        mimicFireworkItemNbtStructureContainer.add(fireworkInfoNbt);
-
-        NbtCompound ret = new NbtCompound();
-        ret.put("Explosions", mimicFireworkItemNbtStructureContainer);
-        return ret;
+    private static FireworkExplosionComponent.Type randomSpecialType() {
+        var i = RNG.nextInt(FireworkExplosionComponent.Type.values().length-1)+1;
+        return FireworkExplosionComponent.Type.values()[i];
     }
 
     @NotNull
-    private static NbtCompound getFireworkInfoNbt() {
-        NbtCompound fireworkInfoNbt = new NbtCompound();
+    private static Pair<IntList,IntList> genFireworkExplosionColorPart() {
+
+        final IntList colors = new IntArrayList();
+        final IntList fadeColors = new IntArrayList();
 
         // Generate Color From DyeColor
         // Maximum is 8 dyes for a firework star
-        List<Integer> list = Lists.newArrayList();
-        Random rand = new Random();
-        int dyeCount = rand.nextInt(8) + 1;
+        int dyeCount = RNG.nextInt(8) + 1;
         for (int i = 0; i < dyeCount; i++)
-            list.add(DyeColor.values()[rand.nextInt(DyeColor.values().length)].getFireworkColor());
+            colors.add(DyeColor.values()[RNG.nextInt(DyeColor.values().length)].getFireworkColor());
+        for (int i = 0; i < dyeCount; i++)
+            fadeColors.add(DyeColor.values()[RNG.nextInt(DyeColor.values().length)].getFireworkColor());
 
-        // Transform color array into required structure
-        int[] colours = new int[list.size()];
-        for (int i = 0; i < colours.length; i++)
-            colours[i] = list.get(i);
-
-        fireworkInfoNbt.putIntArray("Colors", colours);
-        return fireworkInfoNbt;
+        return Pair.of(colors,fadeColors);
     }
 }

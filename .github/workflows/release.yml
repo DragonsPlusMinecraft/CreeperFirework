@@ -5,9 +5,9 @@ permissions:
   contents: write
 
 env:
-  MINECRAFT_VERSION: 1.20.4
-  JAVA_VERSION: 17
-  VERSION: 2.1.0
+  MINECRAFT_VERSION: 1.21.1
+  JAVA_VERSION: 21
+  VERSION: 2.2.0
   MODRINTH_ID: owUiXPam
   CURSEFORGE_ID: 558439
 
@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: "temurin"
-          java-version: 17
+          java-version: 21
 
       - name: Make Gradle Wrapper Executable
         if: ${{ runner.os != 'Windows' }}
@@ -49,29 +49,6 @@ jobs:
 
           loaders: |
             neoforge
-          game-versions: |
-            ${{ env.MINECRAFT_VERSION }}
-          java: |
-            ${{ env.JAVA_VERSION }}
-          retry-attempts: 2
-          retry-delay: 10000
-
-      - name: Publish Forge to CurseForge
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          # CurseForge
-          curseforge-id: ${{ env.CURSEFORGE_ID }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-          # Config
-          name: "[Forge] Creeper Firework ${{ env.VERSION }} for ${{ env.MINECRAFT_VERSION }}"
-          version: ${{ env.VERSION }}
-          version-type: release
-          changelog-file: changelog/${{ env.VERSION }}.md
-          files: forge/build/libs/*-${{ env.VERSION }}!(-@(dev|sources|slim|dev-shadow)).jar
-
-          loaders: |
-            forge
           game-versions: |
             ${{ env.MINECRAFT_VERSION }}
           java: |
@@ -123,30 +100,6 @@ jobs:
 
           loaders: |
             neoforge
-          game-versions: |
-            ${{ env.MINECRAFT_VERSION }}
-          java: |
-            ${{ env.JAVA_VERSION }}
-          retry-attempts: 2
-          retry-delay: 10000
-
-      - name: Publish Forge to Modrinth
-        uses: Kir-Antipov/mc-publish@v3.3
-        with:
-          # Modrinth
-          modrinth-id: ${{ env.MODRINTH_ID }}
-          modrinth-featured: true
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-
-          # Config
-          name: "Creeper Firework ${{ env.VERSION }} for ${{ env.MINECRAFT_VERSION }}"
-          version: ${{ env.VERSION }}
-          version-type: release
-          changelog-file: changelog/${{ env.VERSION }}.md
-          files: forge/build/libs/*-${{ env.VERSION }}!(-@(dev|sources|slim|dev-shadow)).jar
-
-          loaders: |
-            forge
           game-versions: |
             ${{ env.MINECRAFT_VERSION }}
           java: |
