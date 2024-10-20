@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "creeper_firwork",
+  "id": "creeper_firework",
   "version": "${version}",
   "name": "Creeper Firework",
   "description": "Creeper explodes into firework!",
