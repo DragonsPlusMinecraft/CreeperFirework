@@ -21,9 +21,9 @@ public class ConfigurationNeoForge {
         builder.push("explosion");
         CREEPER_EXPLODE_INTO_FIREWORK = builder.comment("Will creeper's active-explosion turn into firework?")
                 .define("CREEPER_EXPLODE_INTO_FIREWORK", true);
-        CREEPER_FIREWORK_HURT_CREATURE = builder.comment("Will the active-explosion firework destroy nearby environment just like creeper normally exploding?")
+        CREEPER_FIREWORK_HURT_CREATURE = builder.comment("Will the active-explosion firework effect hurt nearby creature?")
                 .define("CREEPER_FIREWORK_HURT_CREATURE", false);
-        CREEPER_FIREWORK_DESTROY_BLOCK = builder.comment("Will the active-explosion firework effect hurt nearby creature?")
+        CREEPER_FIREWORK_DESTROY_BLOCK = builder.comment("Will the active-explosion firework destroy nearby environment just like creeper normally exploding?")
                 .define("CREEPER_FIREWORK_DESTROY_BLOCK", false);
         CREEPER_EXPLODE_INTO_FIREWORK_PROBABILITY = builder.comment("The probability of creeper turning into firework when actively explodes.")
                 .defineInRange("CREEPER_EXPLODE_INTO_FIREWORK_PROBABILITY", 1.0, 0, 1.0);
