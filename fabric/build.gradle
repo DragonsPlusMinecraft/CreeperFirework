@@ -1,5 +1,6 @@
 plugins {
-    id "com.github.johnrengelman.shadow"
+    id 'com.github.johnrengelman.shadow'
+    id 'me.modmuss50.mod-publish-plugin'
 }
 
 architectury {
@@ -87,3 +88,26 @@ publishing {
         // Add repositories to publish to here.
     }
 }
+
+publishMods {
+    file = tasks.remapJar.archiveFile
+    changelog = rootProject.file("changelog/${mod_version}.md").text
+    version = mod_version
+    type = STABLE
+    displayName = "[Fabric/Quilt] Creeper Firework ${mod_version} for ${minecraft_version}"
+    modLoaders.add("fabric")
+    modLoaders.add("quilt")
+
+    curseforge {
+        projectId = curseforge_id
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.add(minecraft_version)
+    }
+
+    modrinth {
+        projectId = modrinth_id
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.add(minecraft_version)
+    }
+}
+
