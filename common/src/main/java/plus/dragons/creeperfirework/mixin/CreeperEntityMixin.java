@@ -7,6 +7,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -32,7 +33,7 @@ public abstract class CreeperEntityMixin extends HostileEntity {
     @Shadow
     private static TrackedData<Boolean> CHARGED;
 
-    @Shadow public abstract boolean shouldRenderOverlay();
+    @Shadow public abstract boolean isCharged();
 
     protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -40,7 +41,7 @@ public abstract class CreeperEntityMixin extends HostileEntity {
 
     @Inject(method = "explode",  at = @At(
             value = "INVOKE", 
-            target = "Lnet/minecraft/world/World;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)Lnet/minecraft/world/explosion/Explosion;"), 
+            target = "Lnet/minecraft/server/world/ServerWorld;createExplosion(Lnet/minecraft/entity/Entity;DDDFLnet/minecraft/world/World$ExplosionSourceType;)V"),
             cancellable = true)
     private void injected(CallbackInfo ci) {
         if (Configuration.isCreeperExplodeIntoFirework() && Math.random() < Configuration.becomeFireworkChance()) {
@@ -60,8 +61,8 @@ public abstract class CreeperEntityMixin extends HostileEntity {
                             return false;
                         }
                     },
-                    this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius * (this.shouldRenderOverlay()? 2.0F : 1.0F), false, World.ExplosionSourceType.MOB);
-            this.onRemoval(RemovalReason.KILLED);
+                    this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius * (this.isCharged()? 2.0F : 1.0F), false, World.ExplosionSourceType.MOB);
+            this.onRemoval((ServerWorld) this.getWorld(),RemovalReason.KILLED);
             this.discard();
             ci.cancel();
         }
@@ -94,7 +95,7 @@ public abstract class CreeperEntityMixin extends HostileEntity {
                                 return false;
                             }
                         },
-                        this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius * (this.shouldRenderOverlay()? 2.0F : 1.0F), false, World.ExplosionSourceType.MOB);
+                        this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius * (this.isCharged()? 2.0F : 1.0F), false, World.ExplosionSourceType.MOB);
             }
     }
 }
