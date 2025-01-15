@@ -15,7 +15,7 @@ public record Payload(BlockPos pos, boolean powered)
     public static final PacketCodec<ByteBuf, Payload> PACKET_CODEC = PacketCodec.tuple(
             PacketCodecs.codec(BlockPos.CODEC),
             Payload::pos,
-            PacketCodecs.BOOL,
+            PacketCodecs.BOOLEAN,
             Payload::powered,
             Payload::new
     );
