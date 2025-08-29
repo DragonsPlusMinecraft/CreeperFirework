@@ -35,6 +35,8 @@ public abstract class CreeperEntityMixin extends HostileEntity {
 
     @Shadow public abstract boolean isCharged();
 
+    @Shadow protected abstract void spawnEffectsCloud();
+
     protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -45,6 +47,7 @@ public abstract class CreeperEntityMixin extends HostileEntity {
             cancellable = true)
     private void injected(CallbackInfo ci) {
         if (Configuration.isCreeperExplodeIntoFirework() && Math.random() < Configuration.becomeFireworkChance()) {
+            this.spawnEffectsCloud();
             FireworkEffect.create((CreeperEntity) (Object) this);
             this.getWorld().createExplosion(this, Explosion.createDamageSource(this.getWorld(), this),
                     new EntityExplosionBehavior(this) {
