@@ -72,11 +72,6 @@ public abstract class CreeperEntityMixin extends HostileEntity {
 
     }
 
-    @Unique
-    private float creeperFirework$getExplosionPower() {
-        return this.getDataTracker().get(CHARGED) ? explosionRadius * 2 : explosionRadius;
-    }
-
     @Override
     public void onDeath(DamageSource damageSource) {
         super.onDeath(damageSource);
