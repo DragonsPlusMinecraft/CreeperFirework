@@ -1,6 +1,5 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
-    id 'me.modmuss50.mod-publish-plugin'
+    id 'com.gradleup.shadow'
 }
 
 architectury {
@@ -64,25 +63,3 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
 }
-
-publishMods {
-    file = tasks.remapJar.archiveFile
-    changelog = rootProject.file("changelog/${mod_version}.md").text
-    version = mod_version
-    type = STABLE
-    displayName = "[NeoForge] Creeper Firework ${mod_version} for ${minecraft_version}"
-    modLoaders.add("neoforge")
-
-    curseforge {
-        projectId = curseforge_id
-        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        minecraftVersions.add(minecraft_version)
-    }
-
-    modrinth {
-        projectId = modrinth_id
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        minecraftVersions.add(minecraft_version)
-    }
-}
-

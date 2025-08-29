@@ -1,7 +1,7 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.7-SNAPSHOT" apply false
-    id 'com.github.johnrengelman.shadow' version '8.1.1' apply false
+    id "dev.architectury.loom" version "1.11-SNAPSHOT" apply false
+    id 'com.gradleup.shadow' version '8.3.6' apply false
     id "me.modmuss50.mod-publish-plugin" version "0.7.4"
 }
 
@@ -26,6 +26,11 @@ subprojects {
         archivesName = "$rootProject.name-$project.name"
     }
 
+    repositories {
+        // Add repositories to retrieve artifacts from in here.
+        // You should only use this when depending on other mods because
+    }
+
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
         mappings loom.layered {
@@ -47,5 +52,54 @@ subprojects {
 
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 21
+    }
+
+    publishMods {
+        changelog = rootProject.file("CHANGELOG.md").text
+        version = mod_version
+        type = STABLE
+
+        def CFOption = curseforgeOptions {
+            accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+            projectId = "558439"
+            minecraftVersions.add(minecraft_version)
+        }
+
+        def MROption = modrinthOptions {
+            accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+            projectId = "owUiXPam"
+            minecraftVersions.add(minecraft_version)
+        }
+
+        def createOptions = (String projectName) -> {
+            publishOptions {
+                file = project.provider { project(":$projectName").tasks.remapJar }.flatMap { it.archiveFile }
+                displayName = "[${projectName.toUpperCase()}] Creeper Firework ${mod_version} for ${minecraft_version}"
+                modLoaders.add(projectName.toLowerCase())
+            }
+        }
+
+        def FabricOptions = createOptions("fabric")
+        def NeoForgeOptions = createOptions("neoforge")
+
+        curseforge("CFFabric") {
+            from (CFOption,FabricOptions)
+        }
+
+        curseforge("CFNeoForge") {
+            from (CFOption,NeoForgeOptions)
+        }
+
+        modrinth("MRFabric") {
+            from (MROption,FabricOptions)
+        }
+
+        modrinth("MRNeoForge") {
+            from (MROption,NeoForgeOptions)
+        }
     }
 }
