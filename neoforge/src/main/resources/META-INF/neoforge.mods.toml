@@ -6,7 +6,7 @@ modId = "creeper_firework"
 version = "${version}"
 displayName="Creeper Firework" #mandatory
 displayURL="https://github.com/DragonsPlusMinecraft/CreeperFirework" #optional
-logoFile="icon.jpg" #optional
+logoFile="icon.png" #optional
 authors="MarbleGate" #optional
 description='''
 Creeper explodes into firework!

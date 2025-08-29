@@ -11,7 +11,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/creeper-firework",
     "sources": "https://github.com/DragonsPlusMinecraft/CreeperFirework"
   },
-  "icon": "icon.jpg",
+  "icon": "icon.png",
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
