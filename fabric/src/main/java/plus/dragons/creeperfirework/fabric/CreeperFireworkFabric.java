@@ -12,6 +12,6 @@ public class CreeperFireworkFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         AutoConfig.register(ConfigurationFabric.class, JanksonConfigSerializer::new);
-        PayloadTypeRegistry.playS2C().register(Payload.ID, Payload.PACKET_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(Payload.TYPE, Payload.STREAM_CODEC);
     }
 }

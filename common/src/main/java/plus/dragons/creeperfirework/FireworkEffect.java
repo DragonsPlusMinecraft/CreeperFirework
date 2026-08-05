@@ -1,11 +1,11 @@
 package plus.dragons.creeperfirework;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.entity.mob.CreeperEntity;
+import net.minecraft.world.entity.monster.Creeper;
 
 public class FireworkEffect {
     @ExpectPlatform
-    public static void create(CreeperEntity creeper){
+    public static void create(Creeper creeper){
         throw new RuntimeException();
     }
 }

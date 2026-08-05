@@ -3,8 +3,8 @@ package plus.dragons.creeperfirework.misc;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.minecraft.component.type.FireworkExplosionComponent;
-import net.minecraft.util.DyeColor;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.component.FireworkExplosion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -13,17 +13,17 @@ import java.util.Random;
 
 public class FireworkManufacturer {
     public static final Random RNG = new Random();
-    public static List<FireworkExplosionComponent> generate(boolean powered) {
+    public static List<FireworkExplosion> generate(boolean powered) {
         var colors = genFireworkExplosionColorPart();
-        List<FireworkExplosionComponent> ret = new ArrayList<>();
-        ret.add(new FireworkExplosionComponent(powered ? FireworkExplosionComponent.Type.SMALL_BALL : randomSpecialType(),
+        List<FireworkExplosion> ret = new ArrayList<>();
+        ret.add(new FireworkExplosion(powered ? FireworkExplosion.Shape.SMALL_BALL : randomSpecialType(),
                 colors.left(),colors.right(),powered,powered));
         return ret;
     }
 
-    private static FireworkExplosionComponent.Type randomSpecialType() {
-        var i = RNG.nextInt(FireworkExplosionComponent.Type.values().length-1)+1;
-        return FireworkExplosionComponent.Type.values()[i];
+    private static FireworkExplosion.Shape randomSpecialType() {
+        var i = RNG.nextInt(FireworkExplosion.Shape.values().length-1)+1;
+        return FireworkExplosion.Shape.values()[i];
     }
 
     @NotNull

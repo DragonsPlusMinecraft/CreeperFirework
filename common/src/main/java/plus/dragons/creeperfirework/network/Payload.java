@@ -1,27 +1,27 @@
 package plus.dragons.creeperfirework.network;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
 public record Payload(BlockPos pos, boolean powered)
-        implements CustomPayload {
+        implements CustomPacketPayload {
 
-    public static final Id<Payload> ID = new Id<>(Identifier.of("creeper_firework", "firework_data"));
+    public static final Type<Payload> TYPE = new Type<>(Identifier.fromNamespaceAndPath("creeper_firework", "firework_data"));
 
-    public static final PacketCodec<ByteBuf, Payload> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.codec(BlockPos.CODEC),
+    public static final StreamCodec<ByteBuf, Payload> STREAM_CODEC = StreamCodec.composite(
+            BlockPos.STREAM_CODEC,
             Payload::pos,
-            PacketCodecs.BOOLEAN,
+            ByteBufCodecs.BOOL,
             Payload::powered,
             Payload::new
     );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

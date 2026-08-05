@@ -16,8 +16,8 @@ public class Networking {
     public static void registerNetworking(RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1").executesOn(HandlerThread.MAIN);
         registrar.playToClient(
-                Payload.ID,
-                Payload.PACKET_CODEC,
+                Payload.TYPE,
+                Payload.STREAM_CODEC,
                 new MainThreadPayloadHandler<>(ClientPayloadHandler::handleDataOnMain)
         );
     }

@@ -1,6 +1,6 @@
 plugins {
     id "architectury-plugin" version "3.5.169"
-    id "dev.architectury.loom" version "1.17.491" apply false
+    id "dev.architectury.loom-no-remap" version "1.17.491" apply false
     id "com.gradleup.shadow" version "9.3.0" apply false
     id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
@@ -17,9 +17,12 @@ allprojects {
 
 
 subprojects {
-    apply plugin: "dev.architectury.loom"
+    apply plugin: "dev.architectury.loom-no-remap"
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
+    if (project.name != "common") {
+        apply plugin: "com.gradleup.shadow"
+    }
 
     base {
         // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
@@ -33,10 +36,6 @@ subprojects {
 
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.layered {
-            it.mappings("net.fabricmc:yarn:$rootProject.yarn_mappings:v2")
-            it.mappings("dev.architectury:yarn-mappings-patch-neoforge:$rootProject.yarn_mappings_patch_neoforge_version")
-        }
     }
 
     tasks.withType(JavaCompile).configureEach {
