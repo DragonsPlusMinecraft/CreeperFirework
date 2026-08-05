@@ -23,7 +23,7 @@ type = "required"
 versionRange = "${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
-[[features.creeper_firework]]
+[features.creeper_firework]
 javaVersion="[${java_version},)"
 [[mixins]]
 config="creeper_firework-common.mixins.json"
