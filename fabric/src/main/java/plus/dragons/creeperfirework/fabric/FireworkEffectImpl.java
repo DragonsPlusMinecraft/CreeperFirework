@@ -7,6 +7,6 @@ import plus.dragons.creeperfirework.mixin.CreeperEntityAccessor;
 
 public class FireworkEffectImpl {
     public static void create(CreeperEntity creeper) {
-        NetworkUtil.notifyClient((ServerWorld) creeper.getWorld(),creeper.getBlockPos(),creeper.getDataTracker().get(CreeperEntityAccessor.getChargedTrackedDataKey()));
+        NetworkUtil.notifyClient((ServerWorld) creeper.getEntityWorld(),creeper.getBlockPos(),creeper.getDataTracker().get(CreeperEntityAccessor.getChargedTrackedDataKey()));
     }
 }

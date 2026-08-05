@@ -1,8 +1,8 @@
 plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.11-SNAPSHOT" apply false
-    id 'com.gradleup.shadow' version '8.3.6' apply false
-    id "me.modmuss50.mod-publish-plugin" version "0.7.4"
+    id "architectury-plugin" version "3.5.169"
+    id "dev.architectury.loom" version "1.17.491" apply false
+    id "com.gradleup.shadow" version "9.3.0" apply false
+    id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
 
 
@@ -39,9 +39,9 @@ subprojects {
         }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release = 21
+        options.release = Integer.parseInt(rootProject.java_version)
     }
 
     java {
@@ -50,56 +50,56 @@ subprojects {
         // If you remove this line, sources will not be generated.
         withSourcesJar()
 
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.toVersion(rootProject.java_version)
+        targetCompatibility = JavaVersion.toVersion(rootProject.java_version)
+    }
+}
+
+publishMods {
+    changelog = rootProject.file("CHANGELOG.md").text
+    version = mod_version
+    type = STABLE
+
+    def cfOptions = curseforgeOptions {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = "558439"
+        minecraftVersions.add(minecraft_version)
+        javaVersions.add(JavaVersion.toVersion(rootProject.java_version))
+        client = true
+        server = true
     }
 
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
+    def mrOptions = modrinthOptions {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "owUiXPam"
+        minecraftVersions.add(minecraft_version)
+        environment = CLIENT_AND_SERVER
     }
 
-    publishMods {
-        changelog = rootProject.file("CHANGELOG.md").text
-        version = mod_version
-        type = STABLE
+    def createOptions = (String projectName) -> publishOptions {
+        file = project(":$projectName").tasks.named(rootProject.publish_artifact_task).flatMap { it.archiveFile }
+        displayName = "[${projectName.toUpperCase()}] Creeper Firework ${mod_version} for ${minecraft_version}"
+        modLoaders.add(projectName.toLowerCase())
+    }
 
-        def CFOption = curseforgeOptions {
-            accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-            projectId = "558439"
-            minecraftVersions.add(minecraft_version)
-        }
+    def fabricOptions = createOptions("fabric")
+    def neoForgeOptions = createOptions("neoforge")
 
-        def MROption = modrinthOptions {
-            accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-            projectId = "owUiXPam"
-            minecraftVersions.add(minecraft_version)
-        }
+    curseforge("CFFabric") {
+        from cfOptions, fabricOptions
+        requires("fabric-api", "cloth-config")
+    }
 
-        def createOptions = (String projectName) -> {
-            publishOptions {
-                file = project.provider { project(":$projectName").tasks.remapJar }.flatMap { it.archiveFile }
-                displayName = "[${projectName.toUpperCase()}] Creeper Firework ${mod_version} for ${minecraft_version}"
-                modLoaders.add(projectName.toLowerCase())
-            }
-        }
+    curseforge("CFNeoForge") {
+        from cfOptions, neoForgeOptions
+    }
 
-        def FabricOptions = createOptions("fabric")
-        def NeoForgeOptions = createOptions("neoforge")
+    modrinth("MRFabric") {
+        from mrOptions, fabricOptions
+        requires("fabric-api", "cloth-config")
+    }
 
-        curseforge("CFFabric") {
-            from (CFOption,FabricOptions)
-        }
-
-        curseforge("CFNeoForge") {
-            from (CFOption,NeoForgeOptions)
-        }
-
-        modrinth("MRFabric") {
-            from (MROption,FabricOptions)
-        }
-
-        modrinth("MRNeoForge") {
-            from (MROption,NeoForgeOptions)
-        }
+    modrinth("MRNeoForge") {
+        from mrOptions, neoForgeOptions
     }
 }

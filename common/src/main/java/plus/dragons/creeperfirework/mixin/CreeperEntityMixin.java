@@ -49,7 +49,7 @@ public abstract class CreeperEntityMixin extends HostileEntity {
         if (Configuration.isCreeperExplodeIntoFirework() && Math.random() < Configuration.becomeFireworkChance()) {
             this.spawnEffectsCloud();
             FireworkEffect.create((CreeperEntity) (Object) this);
-            this.getWorld().createExplosion(this, Explosion.createDamageSource(this.getWorld(), this),
+            this.getEntityWorld().createExplosion(this, Explosion.createDamageSource(this.getEntityWorld(), this),
                     new EntityExplosionBehavior(this) {
 
                         @Override
@@ -65,7 +65,7 @@ public abstract class CreeperEntityMixin extends HostileEntity {
                         }
                     },
                     this.getX(), this.getY(), this.getZ(), (float)this.explosionRadius * (this.isCharged()? 2.0F : 1.0F), false, World.ExplosionSourceType.MOB);
-            this.onRemoval((ServerWorld) this.getWorld(),RemovalReason.KILLED);
+            this.onRemoval((ServerWorld) this.getEntityWorld(),RemovalReason.KILLED);
             this.discard();
             ci.cancel();
         }
@@ -75,10 +75,10 @@ public abstract class CreeperEntityMixin extends HostileEntity {
     @Override
     public void onDeath(DamageSource damageSource) {
         super.onDeath(damageSource);
-        if(!this.getWorld().isClient())
+        if(!this.getEntityWorld().isClient())
             if (Configuration.isCreeperExplodeIntoFireworkWhenDie() && Math.random() < Configuration.becomeFireworkChanceWhenDie()) {
                 FireworkEffect.create((CreeperEntity) (Object) this);
-                this.getWorld().createExplosion(this, Explosion.createDamageSource(this.getWorld(), this),
+                this.getEntityWorld().createExplosion(this, Explosion.createDamageSource(this.getEntityWorld(), this),
                         new EntityExplosionBehavior(this) {
 
                             @Override

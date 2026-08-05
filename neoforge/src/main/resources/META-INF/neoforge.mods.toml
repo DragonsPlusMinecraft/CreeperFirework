@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[4,)"
+loaderVersion = "[1,)"
 license = "MIT"
 [[mods]]
 modId = "creeper_firework"
@@ -14,14 +14,16 @@ Creeper explodes into firework!
 [[dependencies.creeper_firework]] #optional
 modId="neoforge" #mandatory
 type = "required"
-versionRange = "[21.3,)"
+versionRange = "${neoforge_version_range}"
 ordering="NONE"
 side="BOTH"
 [[dependencies.creeper_firework]]
 modId="minecraft"
 type = "required"
-versionRange = "[1.21.3,1.22)"
+versionRange = "${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
+[[features.creeper_firework]]
+javaVersion="[${java_version},)"
 [[mixins]]
 config="creeper_firework-common.mixins.json"

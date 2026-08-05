@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class FireworkEffectImpl {
     public static void create(CreeperEntity creeper) {
-        sendEffectPacket(creeper.getWorld(), creeper.getBlockPos(), creeper.getDataTracker().get(CreeperEntityAccessor.getChargedTrackedDataKey()));
+        sendEffectPacket(creeper.getEntityWorld(), creeper.getBlockPos(), creeper.getDataTracker().get(CreeperEntityAccessor.getChargedTrackedDataKey()));
     }
 
     private static void sendEffectPacket(World level, BlockPos pos, boolean powered) {

@@ -48,10 +48,15 @@ dependencies {
 }
 
 processResources {
-    inputs.property 'version', project.version
+    inputs.properties(
+            version: project.version,
+            neoforge_version_range: rootProject.neoforge_version_range,
+            minecraft_version_range: rootProject.minecraft_version_range,
+            java_version: rootProject.java_version
+    )
 
     filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: project.version
+        expand inputs.properties
     }
 }
 
