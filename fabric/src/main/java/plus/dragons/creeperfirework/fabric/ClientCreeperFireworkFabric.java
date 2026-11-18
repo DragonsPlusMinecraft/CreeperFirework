@@ -17,10 +17,11 @@ public class ClientCreeperFireworkFabric implements ClientModInitializer {
             client.execute(() -> {
                 if (client.level != null) {
                     BlockPos pos = payload.pos();
-                    boolean b = payload.powered();
-                    client.level.createFireworks(pos.getX(), pos.getY() + 0.5F + (b? 2: 0), pos.getZ(), 0, 0, 0, FireworkManufacturer.generate(b));
+                    boolean powered = payload.powered();
+                    client.level.createFireworks(pos.getX(), pos.getY() + 0.5F + (powered ? 2 : 0), pos.getZ(),
+                            0, 0, 0, FireworkManufacturer.generate(powered), true);
                     client.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
-                            b ? SoundEvents.FIREWORK_ROCKET_LARGE_BLAST: SoundEvents.FIREWORK_ROCKET_BLAST,
+                            powered ? SoundEvents.FIREWORK_ROCKET_LARGE_BLAST : SoundEvents.FIREWORK_ROCKET_BLAST,
                             SoundSource.HOSTILE, 8.0F, 2.0F);
                 }
             });

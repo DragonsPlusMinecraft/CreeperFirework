@@ -9,7 +9,7 @@ import plus.dragons.creeperfirework.neoforge.misc.ConfigurationNeoForge;
 public class CreeperFireworkNeoForge {
 
     public CreeperFireworkNeoForge(ModContainer container) {
-       container.registerConfig(ModConfig.Type.COMMON, ConfigurationNeoForge.MOD_CONFIG);
+        container.registerConfig(ModConfig.Type.LOCAL, ConfigurationNeoForge.MOD_CONFIG, "creeper_firework-common.toml");
     }
 
 }

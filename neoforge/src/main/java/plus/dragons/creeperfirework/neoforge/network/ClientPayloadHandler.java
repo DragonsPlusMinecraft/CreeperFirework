@@ -15,7 +15,8 @@ public class ClientPayloadHandler {
         context.enqueueWork(() -> {
                     var level = Minecraft.getInstance().level;
                     if (level == null) return;
-                    level.createFireworks(pos.getX(), pos.getY() + 0.5F + (powered? 2: 0), pos.getZ(), 0, 0, 0, FireworkManufacturer.generate(powered));
+                    level.createFireworks(pos.getX(), pos.getY() + 0.5F + (powered ? 2 : 0), pos.getZ(),
+                            0, 0, 0, FireworkManufacturer.generate(powered), true);
                     level.playSound(null, pos.getX(), pos.getY(), pos.getZ(),
                             powered? SoundEvents.FIREWORK_ROCKET_LARGE_BLAST: SoundEvents.FIREWORK_ROCKET_BLAST,
                             SoundSource.HOSTILE, 8.0F, 2.0F);
